@@ -7,7 +7,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: release-name-metrics-server
+  name: metrics-server
   namespace: metrics-server
   labels:
     app.kubernetes.io/name: metrics-server
@@ -39,7 +39,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: system:release-name-metrics-server
+  name: system:metrics-server
   labels:
     app.kubernetes.io/name: metrics-server
     app.kubernetes.io/instance: release-name
@@ -66,7 +66,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: release-name-metrics-server:system:auth-delegator
+  name: metrics-server:system:auth-delegator
   labels:
     app.kubernetes.io/name: metrics-server
     app.kubernetes.io/instance: release-name
@@ -77,13 +77,13 @@ roleRef:
   name: system:auth-delegator
 subjects:
   - kind: ServiceAccount
-    name: release-name-metrics-server
+    name: metrics-server
     namespace: metrics-server
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: system:release-name-metrics-server
+  name: system:metrics-server
   labels:
     app.kubernetes.io/name: metrics-server
     app.kubernetes.io/instance: release-name
@@ -91,16 +91,16 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: system:release-name-metrics-server
+  name: system:metrics-server
 subjects:
   - kind: ServiceAccount
-    name: release-name-metrics-server
+    name: metrics-server
     namespace: metrics-server
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: release-name-metrics-server-auth-reader
+  name: metrics-server-auth-reader
   namespace: kube-system
   labels:
     app.kubernetes.io/name: metrics-server
@@ -112,13 +112,13 @@ roleRef:
   name: extension-apiserver-authentication-reader
 subjects:
   - kind: ServiceAccount
-    name: release-name-metrics-server
+    name: metrics-server
     namespace: metrics-server
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-metrics-server
+  name: metrics-server
   namespace: metrics-server
   labels:
     app.kubernetes.io/name: metrics-server
@@ -138,7 +138,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-metrics-server
+  name: metrics-server
   namespace: metrics-server
   labels:
     app.kubernetes.io/name: metrics-server
@@ -157,7 +157,7 @@ spec:
         app.kubernetes.io/instance: release-name
     spec:
       schedulerName: 
-      serviceAccountName: release-name-metrics-server
+      serviceAccountName: metrics-server
       priorityClassName: "system-cluster-critical"
       containers:
         - name: metrics-server
@@ -224,7 +224,7 @@ spec:
   groupPriorityMinimum: 100
   insecureSkipTLSVerify: true
   service:
-    name: release-name-metrics-server
+    name: metrics-server
     namespace: metrics-server
     port: 443
   version: v1beta1
