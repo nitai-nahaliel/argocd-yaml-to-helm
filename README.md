@@ -1,5 +1,12 @@
 # argocd-yaml-to-helm
 
+## prerequisites
+- Kubernetes cluster (minikube or kind works)
+
+## Setup
+- Deploy ArgoCD on your cluster (feel free to choose deployment method)
+- Apply the given application manifest (`application.yaml` in the root dir of the repo) to create an ArgoCD application
+
 ## Task - Migrate the application to deploy metrics server via helm chart.
 
 ## Details
